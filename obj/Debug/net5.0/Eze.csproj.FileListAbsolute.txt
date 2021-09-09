@@ -39,3 +39,6 @@ D:\Study\programming\.NETCore\Projects\EZERestApi\Eze\bin\Debug\net5.0\runtimes\
 D:\Study\programming\.NETCore\Projects\EZERestApi\Eze\bin\Debug\net5.0\runtimes\linux\native\libmongocrypt.so
 D:\Study\programming\.NETCore\Projects\EZERestApi\Eze\bin\Debug\net5.0\runtimes\osx\native\libmongocrypt.dylib
 D:\Study\programming\.NETCore\Projects\EZERestApi\Eze\bin\Debug\net5.0\runtimes\win\native\mongocrypt.dll
+D:\Study\programming\.NETCore\Projects\EZERestApi\Eze\bin\Debug\net5.0\HealthChecks.MongoDb.dll
+D:\Study\programming\.NETCore\Projects\EZERestApi\Eze\bin\Debug\net5.0\Microsoft.Extensions.Diagnostics.HealthChecks.dll
+D:\Study\programming\.NETCore\Projects\EZERestApi\Eze\bin\Debug\net5.0\Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll
