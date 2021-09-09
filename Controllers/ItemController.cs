@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Eze.Dtos;
 using Eze.Entities;
 using Eze.Repositories;
@@ -19,9 +20,9 @@ namespace Eze.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ICollection<Item>> GetItems()
+        public async Task<ActionResult<ICollection<Item>>> GetItemsAsync()
         {
-            var items = repo.GetItems();
+            var items = await repo.GetItemsAsync();
 
             if(items == null)
             {
@@ -32,9 +33,9 @@ namespace Eze.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Item> GetItem(Guid id)
+        public async Task<ActionResult<Item>> GetItemAsync(Guid id)
         {
-            var item = repo.GetItem(id);
+            var item = await repo.GetItemAsync(id);
 
             if(item == null)
             {
@@ -45,7 +46,7 @@ namespace Eze.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateItem(CreateItemDto itemDto)
+        public async Task<ActionResult> CreateItemAsync(CreateItemDto itemDto)
         {
             var item = new Item()
             {
@@ -55,15 +56,15 @@ namespace Eze.Controllers
                 Condition = itemDto.Condition
             };
 
-            repo.CreateItem(item);
+            await repo.CreateItemAsync(item);
 
-            return CreatedAtAction(nameof(GetItem), new{id = item.Id}, item.AsItemDto());
+            return CreatedAtAction(nameof(GetItemAsync), new{id = item.Id}, item.AsItemDto());
         }
 
         [HttpPut("{id}")]
-        public ActionResult UpdateItem(Guid id, UpdateItemDto itemDto)
+        public async Task<ActionResult> UpdateItemAsync(Guid id, UpdateItemDto itemDto)
         {
-            var item = repo.GetItem(id);
+            var item = await repo.GetItemAsync(id);
 
             if (item == null)
             {
@@ -74,22 +75,22 @@ namespace Eze.Controllers
             item.Description = itemDto.Description;
             item.Condition = itemDto.Condition;
 
-            repo.UpdateItem(item);
+            await repo.UpdateItemAsync(item);
 
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteItem(Guid id)
+        public async Task<ActionResult> DeleteItemAsync(Guid id)
         {
-            var item = repo.GetItem(id);
+            var item = await repo.GetItemAsync(id);
 
             if (item == null)
             {
                 return NotFound();
             }
 
-            repo.DeleteItem(id);
+            await repo.DeleteItemAsync(id);
 
             return NoContent();
         }

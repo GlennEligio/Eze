@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Eze.Dtos;
 using Eze.Entities;
 using Eze.Repositories;
@@ -19,16 +20,16 @@ namespace Eze.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ICollection<Account>> GetAccounts()
+        public async Task<ActionResult<ICollection<Account>>> GetAccountsAsync()
         {
-            var accounts = repo.GetAccounts();
+            var accounts = await repo.GetAccountsAsync();
             return Ok(accounts);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Account> GetAccount(Guid id)
+        public ActionResult<Account> GetAccountAsync(Guid id)
         {
-            var account = repo.GetAccount(id);
+            var account = repo.GetAccountAsync(id);
 
             if(account == null)
             {
@@ -39,7 +40,7 @@ namespace Eze.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateAccount(CreateAccountDto accountDto)
+        public async Task<ActionResult> CreateAccountAsync(CreateAccountDto accountDto)
         {
             var account = new Account()
             {
@@ -49,15 +50,15 @@ namespace Eze.Controllers
                 Password = accountDto.Password
             };
 
-            repo.CreateAccount(account);
+            await repo.CreateAccountAsync(account);
 
-            return CreatedAtAction(nameof(GetAccount), new {id = account.Id}, account.AsAccountDto());
+            return CreatedAtAction(nameof(GetAccountAsync), new {id = account.Id}, account.AsAccountDto());
         }
 
         [HttpPut("{id}")]
-        public ActionResult UpdateAccount(Guid id, UpdateAccountDto accountDto)
+        public async Task<ActionResult> UpdateAccountAsync(Guid id, UpdateAccountDto accountDto)
         {
-            var account = repo.GetAccount(id);
+            var account = await repo.GetAccountAsync(id);
 
             if(account == null)
             {
@@ -68,22 +69,22 @@ namespace Eze.Controllers
             account.Password = accountDto.Password;
             account.Username = accountDto.Username;
 
-            repo.UpdateAccount(account);
+            await repo.UpdateAccountAsync(account);
 
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteAccount(Guid id)
+        public async Task<ActionResult> DeleteAccountAsync(Guid id)
         {
-            var account = repo.GetAccount(id);
+            var account = await repo.GetAccountAsync(id);
 
             if(account == null)
             {
                 return NotFound();
             }
 
-            repo.DeleteAccount(id);
+            await repo.DeleteAccountAsync(id);
 
             return NoContent();
         }

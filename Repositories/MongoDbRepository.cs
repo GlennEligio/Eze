@@ -5,6 +5,7 @@ using MongoDB.Driver;
 using System.Data;
 using System.Linq;
 using MongoDB.Bson;
+using System.Threading.Tasks;
 
 namespace Eze.Repositories
 {
@@ -32,88 +33,88 @@ namespace Eze.Repositories
             requestsCollection = database.GetCollection<Request>(requestCollectionName);
         }
 
-        public void CreateAccount(Account account)
+        public async Task CreateAccountAsync(Account account)
         {
-            accountsCollection.InsertOne(account);
+            await accountsCollection.InsertOneAsync(account);
         }
   
-        public void CreateItem(Item item)
+        public async Task CreateItemAsync(Item item)
         {
-            itemsCollection.InsertOne(item);
+            await itemsCollection.InsertOneAsync(item);
         }
 
-        public void CreateRequest(Request request)
+        public async Task CreateRequestAsync(Request request)
         {
-            requestsCollection.InsertOne(request);
+            await requestsCollection.InsertOneAsync(request);
         }
 
-        public void DeleteAccount(Guid id)
-        {
-            var filter = accountFilterBuilder.Eq(account => account.Id, id);
-            accountsCollection.DeleteOne(filter);
-        }
-
-        public void DeleteItem(Guid id)
-        {
-            var filter = itemFilterBuilder.Eq(item => item.Id, id);
-            itemsCollection.DeleteOne(filter);
-        }
-
-        public void DeleteRequest(Guid id)
-        {
-            var filter = requestFilterBuilder.Eq(request => request.Id, id);
-            requestsCollection.DeleteOne(filter);
-        }
-
-        public Account GetAccount(Guid id)
+        public async Task DeleteAccountAsync(Guid id)
         {
             var filter = accountFilterBuilder.Eq(account => account.Id, id);
-            return accountsCollection.Find(filter).SingleOrDefault();
+            await accountsCollection.DeleteOneAsync(filter);
         }
 
-        public ICollection<Account> GetAccounts()
-        {
-            return accountsCollection.Find(new BsonDocument()).ToList();
-        }
-
-        public Item GetItem(Guid id)
+        public async Task DeleteItemAsync(Guid id)
         {
             var filter = itemFilterBuilder.Eq(item => item.Id, id);
-            return itemsCollection.Find(filter).SingleOrDefault();
+            await itemsCollection.DeleteOneAsync(filter);
         }
 
-        public ICollection<Item> GetItems()
-        {
-            return itemsCollection.Find(new BsonDocument()).ToList();
-        }
-
-        public Request GetRequest(Guid id)
+        public async Task DeleteRequestAsync(Guid id)
         {
             var filter = requestFilterBuilder.Eq(request => request.Id, id);
-            return requestsCollection.Find(filter).SingleOrDefault();
+            await requestsCollection.DeleteOneAsync(filter);
         }
 
-        public ICollection<Request> GetRequests()
+        public async Task<Account> GetAccountAsync(Guid id)
         {
-            return requestsCollection.Find(new BsonDocument()).ToList();
+            var filter = accountFilterBuilder.Eq(account => account.Id, id);
+            return await accountsCollection.Find(filter).SingleOrDefaultAsync();
         }
 
-        public void UpdateAccount(Account account)
+        public async Task<ICollection<Account>> GetAccountsAsync()
+        {
+            return await accountsCollection.Find(new BsonDocument()).ToListAsync();
+        }
+
+        public async Task<Item> GetItemAsync(Guid id)
+        {
+            var filter = itemFilterBuilder.Eq(item => item.Id, id);
+            return await itemsCollection.Find(filter).SingleOrDefaultAsync();
+        }
+
+        public async Task<ICollection<Item>> GetItemsAsync()
+        {
+            return await itemsCollection.Find(new BsonDocument()).ToListAsync();
+        }
+
+        public async Task<Request> GetRequestAsync(Guid id)
+        {
+            var filter = requestFilterBuilder.Eq(request => request.Id, id);
+            return await requestsCollection.Find(filter).SingleOrDefaultAsync();
+        }
+
+        public async Task<ICollection<Request>> GetRequestsAsync()
+        {
+            return await requestsCollection.Find(new BsonDocument()).ToListAsync();
+        }
+
+        public async Task UpdateAccountAsync(Account account)
         {
             var filter = accountFilterBuilder.Eq(existingAccount => existingAccount.Id, account.Id);
-            accountsCollection.ReplaceOne(filter, account);
+            await accountsCollection.ReplaceOneAsync(filter, account);
         }
 
-        public void UpdateItem(Item item)
+        public async Task UpdateItemAsync(Item item)
         {
             var filter = itemFilterBuilder.Eq(existingItem => existingItem.Id, item.Id);
-            itemsCollection.ReplaceOne(filter, item);
+            await itemsCollection.ReplaceOneAsync(filter, item);
         }
 
-        public void UpdateRequest(Request request)
+        public async Task UpdateRequestAsync(Request request)
         {
             var filter = requestFilterBuilder.Eq(exisitingRequest => exisitingRequest.Id, request.Id);
-            requestsCollection.ReplaceOne(filter, request);
+            await requestsCollection.ReplaceOneAsync(filter, request);
         }
     }
 }

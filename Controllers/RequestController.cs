@@ -23,25 +23,25 @@ namespace Eze.Controllers
 
         //GET: Request/
         [HttpGet]
-        public ActionResult<ICollection<Request>> GetRequests()
+        public async Task<ActionResult<ICollection<Request>>> GetRequestsAsync()
         {
-            var requests = repo.GetRequests();
+            var requests = await repo.GetRequestsAsync();
 
             return Ok(requests);  
         }
 
         //GET: request/account-request/{id}
         [HttpGet("/account-request/{id}")]
-        public ActionResult<ICollection<RequestDto>> GetRequestsByProfId(Guid id)
+        public async Task<ActionResult<ICollection<RequestDto>>> GetRequestsByProfIdAsync(Guid id)
         {
-            var account = repo.GetAccount(id);
+            var account = await repo.GetAccountAsync(id);
 
             if(account == null)
             {
                 return NotFound();
             }
 
-            var requests = repo.GetRequests()
+            var requests = (await repo.GetRequestsAsync())
                                 .Where(request => request.ProfessorId == id);
 
             var requestDtos = new List<RequestDto>();  
@@ -52,10 +52,10 @@ namespace Eze.Controllers
 
                 foreach (var itemId in request.ItemIds)
                 {
-                    items.Add(repo.GetItem(itemId));
+                    items.Add(await repo.GetItemAsync(itemId));
                 }
 
-                var professorName = repo.GetAccount(request.ProfessorId).Name;
+                var professorName = (await repo.GetAccountAsync(request.ProfessorId)).Name;
 
                 requestDtos.Add(new RequestDto(request.Id, items, request.CreatedDate, request.StudentName, professorName, request.Code, request.Status));
             }
@@ -65,9 +65,9 @@ namespace Eze.Controllers
 
         //GET: Request/{id}
         [HttpGet("{id}")]
-        public ActionResult<Request> GetRequest(Guid id)
+        public async Task<ActionResult<Request>> GetRequestAsync(Guid id)
         {
-            var request = repo.GetRequest(id);
+            var request = await repo.GetRequestAsync(id);
             
             if(request == null)
             {
@@ -79,10 +79,10 @@ namespace Eze.Controllers
 
         //POST: Request/
         [HttpPost]
-        public ActionResult CreateRequest(CreateRequestDto requestDto)
+        public async Task<ActionResult> CreateRequestAsync(CreateRequestDto requestDto)
         {
-            var account = repo.GetAccount(requestDto.ProfessorId);
-            var items = repo.GetItems().Where(item => requestDto.ItemIds.Contains(item.Id)).ToList();
+            var account = await repo.GetAccountAsync(requestDto.ProfessorId);
+            var items = (await repo.GetItemsAsync()).Where(item => requestDto.ItemIds.Contains(item.Id)).ToList();
             
             var request = new Request
             {
@@ -96,26 +96,26 @@ namespace Eze.Controllers
                 Description = requestDto.Description
             };
 
-            repo.CreateRequest(request);
+            await repo.CreateRequestAsync(request);
 
-            return CreatedAtAction(nameof(GetRequest), new {id = request.Id}, RequestAsDto(request, account, items));
+            return CreatedAtAction(nameof(GetRequestAsync), new {id = request.Id}, RequestAsDto(request, account, items));
         }
 
         //PUT: Request/{id}
         [HttpPut("{id}")]
-        public void UpdateRequest(Guid id, UpdateRequestDto requestDto)
+        public async Task UpdateRequestAsync(Guid id, UpdateRequestDto requestDto)
         {
-            var request = repo.GetRequest(id);
+            var request = await repo.GetRequestAsync(id);
 
             request.Status = requestDto.Status;
 
-            repo.UpdateRequest(request);
+            await repo.UpdateRequestAsync(request);
         }
 
         [HttpDelete("{id}")]
-        public void DeleteRequest(Guid id)
+        public async Task DeleteRequestAsync(Guid id)
         {
-            repo.DeleteRequest(id);
+            await repo.DeleteRequestAsync(id);
         }
 
         private static RequestDto RequestAsDto(Request request, Account account, IEnumerable<Item> items)
