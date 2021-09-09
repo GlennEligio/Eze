@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Eze.Entities;
 
 namespace Eze.Repositories
@@ -7,24 +8,24 @@ namespace Eze.Repositories
     public interface IEzeRepository
     {
         //Account CRUD
-        ICollection<Account> GetAccounts();
-        Account GetAccount(Guid id);
-        void CreateAccount(Account account);
-        void UpdateAccount(Account account);
-        void DeleteAccount(Guid id);
+        Task<ICollection<Account>> GetAccountsAsync();
+        Task<Account> GetAccountAsync(Guid id);
+        Task CreateAccountAsync(Account account);
+        Task UpdateAccountAsync(Account account);
+        Task DeleteAccountAsync(Guid id);
 
         //Item CRUD
-        ICollection<Item> GetItems();
-        Item GetItem(Guid id);
-        void CreateItem(Item item);
-        void UpdateItem(Item item);
-        void DeleteItem(Guid id);
+        Task<ICollection<Item>> GetItemsAsync();
+        Task<Item> GetItemAsync(Guid id);
+        Task CreateItemAsync(Item item);
+        Task UpdateItemAsync(Item item);
+        Task DeleteItemAsync(Guid id);
 
         //Request CRUD
-        ICollection<Request> GetRequests();
-        Request GetRequest(Guid id);
-        void CreateRequest(Request request);
-        void UpdateRequest(Request request);
-        void DeleteRequest(Guid id);
+        Task<ICollection<Request>> GetRequestsAsync();
+        Task<Request> GetRequestAsync(Guid id);
+        Task CreateRequestAsync(Request request);
+        Task UpdateRequestAsync(Request request);
+        Task DeleteRequestAsync(Guid id);
     }
 }
