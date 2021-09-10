@@ -50,7 +50,7 @@ namespace Eze
                 .AddMongoDb(mongoDbSettings.ConnectionString, 
                             tags: new[]{"ready"},
                             name: "mongodb", 
-                            timeout: TimeSpan.FromSeconds(3));
+                            timeout: TimeSpan.FromSeconds(5));
 
             services.AddSingleton<IEzeRepository, MongoDbRepository>();
             services.AddSingleton<IRequestRepository, InMemRequestRepository>();

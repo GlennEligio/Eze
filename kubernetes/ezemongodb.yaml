@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ezemongodb-statefulset
+spec:
+  serviceName: "ezemongodb-service"
+  selector:
+    matchLabels:
+      app: ezemongodb
+  template:
+    metadata:
+      labels:
+        app: ezemongodb
+    spec:
+      containers:
+      - name: ezemongodb
+        image: mongo
+        resources:
+          limits:
+            memory: "128Mi" 
+            cpu: "500m"
+        ports:
+        - containerPort: 27017
+        env:
+          - name: MONGO_INITDB_ROOT_USERNAME
+            value: "mongoadmin"
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: eze-secrets
+                key: mongodb-password
+        volumeMounts:
+          - mountPath: /data/db
+            name: data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ezemongodb-service
+spec:
+  clusterIP: None
+  selector:
+    app: ezemongodb
+  ports:
+  - port: 27017
+    targetPort: 27017
+

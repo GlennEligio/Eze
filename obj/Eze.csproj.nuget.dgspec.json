@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Study\\programming\\.NETCore\\Projects\\EZERestApi\\Eze\\Eze.csproj": {}
+    "d:\\Study\\programming\\.NETCore\\Projects\\EZERestApi\\Eze\\Eze.csproj": {}
   },
   "projects": {
-    "D:\\Study\\programming\\.NETCore\\Projects\\EZERestApi\\Eze\\Eze.csproj": {
+    "d:\\Study\\programming\\.NETCore\\Projects\\EZERestApi\\Eze\\Eze.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Study\\programming\\.NETCore\\Projects\\EZERestApi\\Eze\\Eze.csproj",
+        "projectUniqueName": "d:\\Study\\programming\\.NETCore\\Projects\\EZERestApi\\Eze\\Eze.csproj",
         "projectName": "Eze",
-        "projectPath": "D:\\Study\\programming\\.NETCore\\Projects\\EZERestApi\\Eze\\Eze.csproj",
+        "projectPath": "d:\\Study\\programming\\.NETCore\\Projects\\EZERestApi\\Eze\\Eze.csproj",
         "packagesPath": "C:\\Users\\glenn\\.nuget\\packages\\",
-        "outputPath": "D:\\Study\\programming\\.NETCore\\Projects\\EZERestApi\\Eze\\obj\\",
+        "outputPath": "d:\\Study\\programming\\.NETCore\\Projects\\EZERestApi\\Eze\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
