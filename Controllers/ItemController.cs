@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Eze.Controllers
 {
     [ApiController]
-    [Route("item")]
+    [Route("api/item")]
     public class ItemController : ControllerBase
     {
         private readonly IEzeRepository repo;

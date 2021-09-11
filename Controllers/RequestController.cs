@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 namespace Eze.Controllers
 {
     [ApiController]
-    [Route("request")]
+    [Route("api/request")]
     public class RequestController : ControllerBase
     {
         private readonly IEzeRepository repo;

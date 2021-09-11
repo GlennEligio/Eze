@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Eze.Controllers
 {
     [ApiController]
-    [Route("account")]
+    [Route("api/account")]
     public class AccountController : ControllerBase
     {
         private readonly IEzeRepository repo;
