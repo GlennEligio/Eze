@@ -9,15 +9,15 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/bin/Debug/net5.0/Eze.dll",
+            "program": "${workspaceFolder}/Eze.Api/bin/Debug/net5.0/Eze.Api.dll",
             "args": [],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/Eze.Api",
             "stopAtEntry": false,
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
             "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
+                "/Views": "${workspaceFolder}/Eze.Api/Views"
             }
         },
         {
@@ -31,7 +31,7 @@
             "request": "launch",
             "preLaunchTask": "docker-run: debug",
             "netCore": {
-                "appProject": "${workspaceFolder}/Eze.csproj"
+                "appProject": "${workspaceFolder}/Eze.Api/Eze.Api.csproj"
             }
         }
     ]

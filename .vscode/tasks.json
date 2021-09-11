@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Eze.csproj",
+                "${workspaceFolder}/build.proj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -23,7 +23,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/Eze.csproj",
+                "${workspaceFolder}/Eze.Api/Eze.Api.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -36,7 +36,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/Eze.csproj",
+                "${workspaceFolder}/Eze.Api/Eze.Api.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -51,12 +51,12 @@
             "dockerBuild": {
                 "tag": "eze:dev",
                 "target": "base",
-                "dockerfile": "${workspaceFolder}/Dockerfile",
-                "context": "${workspaceFolder}",
+                "dockerfile": "${workspaceFolder}/Eze.Api/Dockerfile",
+                "context": "${workspaceFolder}/Eze.Api",
                 "pull": true
             },
             "netCore": {
-                "appProject": "${workspaceFolder}/Eze.csproj"
+                "appProject": "${workspaceFolder}/Eze.Api/Eze.Api.csproj"
             }
         },
         {
@@ -67,12 +67,12 @@
             ],
             "dockerBuild": {
                 "tag": "eze:latest",
-                "dockerfile": "${workspaceFolder}/Dockerfile",
-                "context": "${workspaceFolder}",
+                "dockerfile": "${workspaceFolder}/Eze.Api/Dockerfile",
+                "context": "${workspaceFolder}/Eze.Api",
                 "pull": true
             },
             "netCore": {
-                "appProject": "${workspaceFolder}/Eze.csproj"
+                "appProject": "${workspaceFolder}/Eze.Api/Eze.Api.csproj"
             }
         },
         {
@@ -83,7 +83,7 @@
             ],
             "dockerRun": {},
             "netCore": {
-                "appProject": "${workspaceFolder}/Eze.csproj",
+                "appProject": "${workspaceFolder}/Eze.Api/Eze.Api.csproj",
                 "enableDebugging": true,
                 "configureSsl": false
             }
@@ -96,7 +96,7 @@
             ],
             "dockerRun": {},
             "netCore": {
-                "appProject": "${workspaceFolder}/Eze.csproj"
+                "appProject": "${workspaceFolder}/Eze.Api/Eze.Api.csproj"
             }
         }
     ]
