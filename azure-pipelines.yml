@@ -38,6 +38,6 @@ stages:
         containerRegistry: 'ShuntJG'
         repository: 'shuntjg/eze'
         command: 'buildAndPush'
-        Dockerfile: '**/**/Dockerfile'
-        buildContext: '**/Eze.Api'
+        Dockerfile: '$(Build.SourcesDirectory)/Eze.Api/Dockerfile'
+        buildContext: '$(Build.SourcesDirectory)/Eze.Api'
     
