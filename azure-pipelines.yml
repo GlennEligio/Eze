@@ -37,6 +37,6 @@ stages:
       displayName: Build an image
       inputs:
         command: build
-        dockerfile: 
+        dockerfile: '$(Build.SourcesDirectory)/Eze.Api/Dockerfile'
         tags: |
           $(tag)
