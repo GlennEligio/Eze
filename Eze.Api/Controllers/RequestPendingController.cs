@@ -25,7 +25,7 @@ namespace Eze.Api.Controllers
         
         //GET: /request-pending/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<RequestPendingDto>>> RequestPendingAsync(Guid id)
+        public async Task<ActionResult<List<RequestPendingDto>>> RequestPendingAsync(Guid id)
         {
             var account = await repo.GetAccountAsync(id);
 

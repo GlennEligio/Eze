@@ -41,9 +41,12 @@ namespace Eze.UnitTests
             var result = await controller.RequestPendingAsync(existingAccount.Id);
 
             //Assert
-            var pendingRequest = (result.Result as OkObjectResult).Value as IEnumerable<RequestPendingDto>;
+            var pendingRequest = (result.Result as OkObjectResult).Value as List<RequestPendingDto>;
             pendingRequest.Should().NotBeNull();
-            pendingRequest.Should().OnlyContain(request => request.Status == false);
+            if(pendingRequest.Count < 0)
+            {
+                pendingRequest.Should().OnlyContain(request => request.Status == false);
+            }
             pendingRequest.Should().OnlyHaveUniqueItems(request => request.Id);
         }
 
