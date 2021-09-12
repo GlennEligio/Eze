@@ -96,7 +96,7 @@ namespace Eze.UnitTests
                 StudentName = Guid.NewGuid().ToString(),
                 ProfessorId = Guid.NewGuid(),
                 Code = Guid.NewGuid().ToString(),
-                Status = rand.Next(3)%2 == 1 ? false : true,
+                Status = false,
                 Description = Guid.NewGuid().ToString()
             };
         }
