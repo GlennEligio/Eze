@@ -15,9 +15,9 @@ namespace Eze.Api.Controllers
     public class ItemController : ControllerBase
     {
         private readonly IEzeRepository repo;
-        private readonly ILogger logger;
+        private readonly ILogger<ItemController> logger;
 
-        public ItemController(IEzeRepository repo, ILogger logger)
+        public ItemController(IEzeRepository repo, ILogger<ItemController> logger)
         {
             this.repo = repo;
             this.logger = logger;
@@ -39,6 +39,7 @@ namespace Eze.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [ActionName("GetItemAsync")]
         public async Task<ActionResult<ItemDto>> GetItemAsync(Guid id)
         {
             var item = await repo.GetItemAsync(id);

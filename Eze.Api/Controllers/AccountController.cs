@@ -15,9 +15,9 @@ namespace Eze.Api.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IEzeRepository repo;
-        private readonly ILogger logger;
+        private readonly ILogger<AccountController> logger;
 
-        public AccountController(IEzeRepository repo, ILogger logger)
+        public AccountController(IEzeRepository repo, ILogger<AccountController> logger)
         {
             this.repo = repo;
             this.logger = logger;
@@ -35,6 +35,7 @@ namespace Eze.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [ActionName("GetAccountAsync")]
         public async Task<ActionResult<AccountDto>> GetAccountAsync(Guid id)
         {
             var account = await repo.GetAccountAsync(id);

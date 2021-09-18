@@ -15,9 +15,9 @@ namespace Eze.Api.Controllers
     public class RequestPendingController : ControllerBase
     {        
         private readonly IEzeRepository repo;
-        private readonly ILogger logger;
+        private readonly ILogger<RequestPendingController> logger;
 
-        public RequestPendingController(IEzeRepository repo, ILogger logger)
+        public RequestPendingController(IEzeRepository repo, ILogger<RequestPendingController> logger)
         {
             this.repo = repo;
             this.logger = logger;

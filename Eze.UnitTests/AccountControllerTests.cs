@@ -16,7 +16,7 @@ namespace Eze.UnitTests
     public class AccountControllerTests
     {
         private readonly Mock<IEzeRepository> repositoryStub = new();
-        private readonly Mock<ILogger> loggerStub = new();
+        private readonly Mock<ILogger<AccountController>> loggerStub = new();
 
         [Fact]
         public async Task GetAccountAsync_WithUnexistingAccount_ReturnsNotFound()
@@ -79,12 +79,7 @@ namespace Eze.UnitTests
         public async Task CreateAccountAsync_WithAccountToCreate_ReturnsCreatedItem()
         {
             //Arrange
-            var accountToCreate = new CreateAccountDto
-            {
-                Name = Guid.NewGuid().ToString(),
-                Username = Guid.NewGuid().ToString(),
-                Password = Guid.NewGuid().ToString()
-            };
+            var accountToCreate = new CreateAccountDto(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
 
             var controller = new AccountController(repositoryStub.Object, loggerStub.Object);
 
@@ -107,12 +102,7 @@ namespace Eze.UnitTests
             repositoryStub.Setup(repo => repo.GetAccountAsync(It.IsAny<Guid>())).ReturnsAsync(existingAccount);
 
             var accountId = existingAccount.Id;
-            var accountToUpdate = new UpdateAccountDto
-            {
-                Name = Guid.NewGuid().ToString(),
-                Username = Guid.NewGuid().ToString(),
-                Password = Guid.NewGuid().ToString()
-            };
+            var accountToUpdate = new UpdateAccountDto(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
 
             var controller = new AccountController(repositoryStub.Object, loggerStub.Object);
 

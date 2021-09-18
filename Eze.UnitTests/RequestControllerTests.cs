@@ -16,7 +16,7 @@ namespace Eze.UnitTests
     public class RequestControllerTests
     {
         private readonly Mock<IEzeRepository> repositoryStub = new ();
-        private readonly Mock<ILogger> loggerStub = new ();
+        private readonly Mock<ILogger<RequestController>> loggerStub = new ();
         private readonly Random rand = new();
 
         [Fact]
@@ -76,12 +76,11 @@ namespace Eze.UnitTests
         {
             //Arrange
             var requestToCreate = new CreateRequestDto
-            {
-                ItemIds = new List<Guid>{Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()},
-                StudentName = Guid.NewGuid().ToString(),
-                ProfessorId = Guid.NewGuid(),
-                Description = Guid.NewGuid().ToString(),
-            };
+            (new List<Guid>{Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()},
+                Guid.NewGuid().ToString(),
+                Guid.NewGuid(),
+                Guid.NewGuid().ToString()
+            );
 
             var controller = new RequestController(repositoryStub.Object, loggerStub.Object);
 
@@ -105,10 +104,7 @@ namespace Eze.UnitTests
             repositoryStub.Setup(repo => repo.GetRequestAsync(It.IsAny<Guid>())).ReturnsAsync(existingRequest);
             
             var requestId = existingRequest.Id;
-            var requestToUpdate = new UpdateRequestDto
-            {
-                Status = rand.Next(3)%2 == 1 ? false : true              
-            };
+            var requestToUpdate = new UpdateRequestDto(rand.Next(3)%2 == 1 ? false : true);
 
             var controller = new RequestController(repositoryStub.Object, loggerStub.Object);
 

@@ -16,7 +16,7 @@ namespace Eze.UnitTests
     public class ItemControllerTests
     {
         private readonly Mock<IEzeRepository> repositoryStub = new();
-        private readonly Mock<ILogger> loggerStub = new();
+        private readonly Mock<ILogger<ItemController>> loggerStub = new();
 
         [Fact]
         public async Task GetItemAsync_WithUnexistingItem_ReturnsNotFound()
@@ -77,12 +77,7 @@ namespace Eze.UnitTests
         public async Task CreateItemAsync_WithItemToCreated_ReturnsCreatedItem()
         {
             //Arrange
-            var itemToCreate = new CreateItemDto
-            {
-                Name = Guid.NewGuid().ToString(),
-                Description = Guid.NewGuid().ToString(),
-                Condition = Guid.NewGuid().ToString(),
-            };
+            var itemToCreate = new CreateItemDto(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
 
             var controller = new ItemController(repositoryStub.Object, loggerStub.Object);
 
@@ -105,12 +100,7 @@ namespace Eze.UnitTests
             repositoryStub.Setup(repo => repo.GetItemAsync(It.IsAny<Guid>())).ReturnsAsync(exisingItem);
 
             var itemId = exisingItem.Id;
-            var itemToUpdate = new UpdateItemDto
-            {
-                Name = Guid.NewGuid().ToString(),
-                Description = Guid.NewGuid().ToString(),
-                Condition = Guid.NewGuid().ToString()
-            };
+            var itemToUpdate = new UpdateItemDto(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
 
             var controller = new ItemController(repositoryStub.Object, loggerStub.Object);
 

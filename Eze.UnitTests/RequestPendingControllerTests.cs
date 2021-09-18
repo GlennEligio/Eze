@@ -16,7 +16,7 @@ namespace Eze.UnitTests
     public class RequestPendingControllerTests
     {
         private readonly Mock<IEzeRepository> repositoryStub = new ();
-        private readonly Mock<ILogger> loggerStub = new();
+        private readonly Mock<ILogger<RequestPendingController>> loggerStub = new();
         private readonly Random rand = new();
 
         [Fact]

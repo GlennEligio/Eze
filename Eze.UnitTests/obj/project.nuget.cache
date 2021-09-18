@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UJummT+z8VHoVqUfgA8AjHIvouWEOIUMMSkKX/UKFfiQzjrUQXALY6LJ4OWIW9NrhvnM5dExOW9yrJYkkChVyw==",
+  "dgSpecHash": "JDVnSJuDc1qtMBhrFMeDuUsGDgIrVyVF5aHQnGl/EMuYI1btVusVxEi3vnsYA3LqVf6dzDyJBh5nRd5oInw92Q==",
   "success": true,
-  "projectFilePath": "d:\\Study\\programming\\.NETCore\\Projects\\EZERestApi\\Eze\\Eze.UnitTests\\Eze.UnitTests.csproj",
+  "projectFilePath": "D:\\Study\\programming\\.NETCore\\Projects\\EZERestApiWithAuth\\Eze\\Eze\\Eze.UnitTests\\Eze.UnitTests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\glenn\\.nuget\\packages\\aspnetcore.healthchecks.mongodb\\5.0.1\\aspnetcore.healthchecks.mongodb.5.0.1.nupkg.sha512",
     "C:\\Users\\glenn\\.nuget\\packages\\castle.core\\4.4.0\\castle.core.4.4.0.nupkg.sha512",

@@ -15,9 +15,9 @@ namespace Eze.Api.Controllers
     public class RequestController : ControllerBase
     {
         private readonly IEzeRepository repo;
-        private readonly ILogger logger;
+        private readonly ILogger<RequestController> logger;
 
-        public RequestController(IEzeRepository repo, ILogger logger)
+        public RequestController(IEzeRepository repo, ILogger<RequestController> logger)
         {
             this.repo = repo;
             this.logger = logger;
@@ -36,6 +36,7 @@ namespace Eze.Api.Controllers
 
         //GET: Request/{id}
         [HttpGet("{id}")]
+        [ActionName("GetRequestAsync")]
         public async Task<ActionResult<RequestDto>> GetRequestAsync(Guid id)
         {
             var request = await repo.GetRequestAsync(id);
@@ -55,7 +56,7 @@ namespace Eze.Api.Controllers
             var request = new Request
             {
                 Id = Guid.NewGuid(),
-                ItemIds = requestDto.ItemIds,
+                ItemIds = requestDto.ItemIds as List<Guid>,
                 StudentName = requestDto.StudentName,
                 ProfessorId = requestDto.ProfessorId,
                 Code = Extensions.GenerateRandomAlphanumericString(),
