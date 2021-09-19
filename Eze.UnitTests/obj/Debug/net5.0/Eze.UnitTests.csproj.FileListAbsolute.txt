@@ -266,3 +266,10 @@ d:\Study\programming\.NETCore\Projects\EZERestApiWithAuth\Eze\Eze\Eze.UnitTests\
 d:\Study\programming\.NETCore\Projects\EZERestApiWithAuth\Eze\Eze\Eze.UnitTests\obj\Debug\net5.0\ref\Eze.UnitTests.dll
 d:\Study\programming\.NETCore\Projects\EZERestApiWithAuth\Eze\Eze\Eze.UnitTests\obj\Debug\net5.0\Eze.UnitTests.pdb
 d:\Study\programming\.NETCore\Projects\EZERestApiWithAuth\Eze\Eze\Eze.UnitTests\obj\Debug\net5.0\Eze.UnitTests.genruntimeconfig.cache
+d:\Study\programming\.NETCore\Projects\EZERestApiWithAuth\Eze\Eze\Eze.UnitTests\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+d:\Study\programming\.NETCore\Projects\EZERestApiWithAuth\Eze\Eze\Eze.UnitTests\bin\Debug\net5.0\Microsoft.IdentityModel.JsonWebTokens.dll
+d:\Study\programming\.NETCore\Projects\EZERestApiWithAuth\Eze\Eze\Eze.UnitTests\bin\Debug\net5.0\Microsoft.IdentityModel.Logging.dll
+d:\Study\programming\.NETCore\Projects\EZERestApiWithAuth\Eze\Eze\Eze.UnitTests\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.dll
+d:\Study\programming\.NETCore\Projects\EZERestApiWithAuth\Eze\Eze\Eze.UnitTests\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+d:\Study\programming\.NETCore\Projects\EZERestApiWithAuth\Eze\Eze\Eze.UnitTests\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
+d:\Study\programming\.NETCore\Projects\EZERestApiWithAuth\Eze\Eze\Eze.UnitTests\bin\Debug\net5.0\System.IdentityModel.Tokens.Jwt.dll

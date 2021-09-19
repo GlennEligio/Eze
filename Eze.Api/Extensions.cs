@@ -19,7 +19,7 @@ namespace Eze.Api
 
         public static AccountDto AsAccountDto(this Account account)
         {
-            return new AccountDto(account.Id, account.Name, account.Username, account.Password, account.CreatedDate);
+            return new AccountDto(account.Id, account.Name, account.Username, account.Password, account.CreatedDate, account.Role);
         }
 
         public static ItemDto AsItemDto(this Item item)

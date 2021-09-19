@@ -8,6 +8,7 @@ using Eze.Api.Repositories;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Moq;
 using Xunit;
 
@@ -17,6 +18,7 @@ namespace Eze.UnitTests
     {
         private readonly Mock<IEzeRepository> repositoryStub = new();
         private readonly Mock<ILogger<AccountController>> loggerStub = new();
+        private readonly Mock<IOptions<JWTSettings>> jwtSettingsStub = new();
 
         [Fact]
         public async Task GetAccountAsync_WithUnexistingAccount_ReturnsNotFound()
@@ -25,7 +27,7 @@ namespace Eze.UnitTests
             repositoryStub.Setup(repo => repo.GetAccountAsync(It.IsAny<Guid>()))
                             .ReturnsAsync((Account) null);
 
-            var controller = new AccountController(repositoryStub.Object, loggerStub.Object);
+            var controller = new AccountController(repositoryStub.Object, loggerStub.Object, jwtSettingsStub.Object);
 
             //Act
             var result = await controller.GetAccountAsync(Guid.NewGuid());
@@ -42,7 +44,7 @@ namespace Eze.UnitTests
             repositoryStub.Setup(repo => repo.GetAccountAsync(It.IsAny<Guid>()))
                             .ReturnsAsync(expectedAccount);
 
-            var controller = new AccountController(repositoryStub.Object, loggerStub.Object);
+            var controller = new AccountController(repositoryStub.Object, loggerStub.Object, jwtSettingsStub.Object);
 
             //Act
             var result = await controller.GetAccountAsync(Guid.NewGuid());
@@ -63,7 +65,7 @@ namespace Eze.UnitTests
             repositoryStub.Setup(repo => repo.GetAccountsAsync())
                             .ReturnsAsync(expectedAccounts);
 
-            var controller = new AccountController(repositoryStub.Object, loggerStub.Object);
+            var controller = new AccountController(repositoryStub.Object, loggerStub.Object, jwtSettingsStub.Object);
 
             //Act
             var result = await controller.GetAccountsAsync();
@@ -79,9 +81,9 @@ namespace Eze.UnitTests
         public async Task CreateAccountAsync_WithAccountToCreate_ReturnsCreatedItem()
         {
             //Arrange
-            var accountToCreate = new CreateAccountDto(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
+            var accountToCreate = new CreateAccountDto(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
 
-            var controller = new AccountController(repositoryStub.Object, loggerStub.Object);
+            var controller = new AccountController(repositoryStub.Object, loggerStub.Object, jwtSettingsStub.Object);
 
             //Act
             var result = await controller.CreateAccountAsync(accountToCreate);
@@ -102,9 +104,9 @@ namespace Eze.UnitTests
             repositoryStub.Setup(repo => repo.GetAccountAsync(It.IsAny<Guid>())).ReturnsAsync(existingAccount);
 
             var accountId = existingAccount.Id;
-            var accountToUpdate = new UpdateAccountDto(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
+            var accountToUpdate = new UpdateAccountDto(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
 
-            var controller = new AccountController(repositoryStub.Object, loggerStub.Object);
+            var controller = new AccountController(repositoryStub.Object, loggerStub.Object, jwtSettingsStub.Object);
 
             //Act
             var result = await controller.UpdateAccountAsync(accountId, accountToUpdate);
@@ -121,7 +123,7 @@ namespace Eze.UnitTests
             var existingAccount = CreateRandomAccount();
             repositoryStub.Setup(repo => repo.GetAccountAsync(It.IsAny<Guid>())).ReturnsAsync(existingAccount);
 
-            var controller = new AccountController(repositoryStub.Object, loggerStub.Object);
+            var controller = new AccountController(repositoryStub.Object, loggerStub.Object, jwtSettingsStub.Object);
 
             //Act
             var result = await controller.DeleteAccountAsync(existingAccount.Id);

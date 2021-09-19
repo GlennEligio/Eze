@@ -6,9 +6,11 @@ using Eze.Api.Entities;
 namespace Eze.Api.Dtos
 {
     //Account related objects
-    public record AccountDto(Guid Id, string Name, string Username, string Password, DateTimeOffset CreatedDate);
-    public record CreateAccountDto([Required] string Name, [Required] string Username, [Required] string Password);
-    public record UpdateAccountDto([Required] string Name, [Required] string Username, [Required] string Password);
+    public record AccountDto(Guid Id, string Name, string Username, string Password, DateTimeOffset CreatedDate, string Role);
+    public record CreateAccountDto([Required] string Name, [Required] string Username, [Required] string Password, string Role);
+    public record UpdateAccountDto([Required] string Name, [Required] string Username, [Required] string Password, string Role);
+    public record AccountWithTokenDto(string Name, string Username, string Password, string Token);
+    public record LoginAccountDto([Required] string Username, [Required] string Password);
 
     //Item related objects
     public record ItemDto(Guid Id, string Name, string Description, string Condition, DateTimeOffset CreatedDate);

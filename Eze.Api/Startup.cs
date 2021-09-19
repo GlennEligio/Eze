@@ -21,6 +21,10 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using System.Text.Json;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Http;
+using Eze.Api.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Eze.Api
 {
@@ -59,6 +63,30 @@ namespace Eze.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Eze", Version = "v1" });
             });
+
+            var jwtSettings = Configuration.GetSection("JWTSettings");
+            services.Configure<JWTSettings>(jwtSettings);
+
+            var jwtSettingsObject = jwtSettings.Get<JWTSettings>();
+            var key = Encoding.ASCII.GetBytes(jwtSettingsObject.SecretKey);
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = true;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,7 +102,7 @@ namespace Eze.Api
 
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
