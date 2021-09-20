@@ -132,6 +132,27 @@ namespace Eze.UnitTests
             result.Should().BeOfType<NoContentResult>();
         }
 
+        [Fact]
+        public async Task LoginAsync_WithExistingAccount_ReturnAccountWithTokens()
+        {
+        //Given
+        var existingAccounts = new[]{CreateRandomAccount(), CreateRandomAccount(), CreateRandomAccount()};
+        repositoryStub.Setup(repo => repo.GetAccountsAsync()).ReturnsAsync(existingAccounts);
+
+        var loginAccount = new LoginAccountDto(existingAccounts[0].Username, existingAccounts[0].Password);
+
+        var controller = new AccountController(repositoryStub.Object, loggerStub.Object, jwtSettingsStub.Object);
+        
+        //When
+        var result = (await controller.LoginAsync(loginAccount));
+        
+        //Then
+        var accountWithTokenResult = (result.Result as OkObjectResult).Value as AccountWithTokenDto;
+        accountWithTokenResult.Should().BeEquivalentTo(existingAccounts[0], options => options.ComparingByMembers<Account>().ExcludingMissingMembers());
+        accountWithTokenResult.AccessToken.Should().NotBeEmpty();
+        accountWithTokenResult.RefreshToken.Should().NotBeEmpty();
+        }
+
         private Account CreateRandomAccount()
         {
             return new Account
@@ -140,7 +161,8 @@ namespace Eze.UnitTests
                 Name = Guid.NewGuid().ToString(),
                 Username = Guid.NewGuid().ToString(),
                 Password = Guid.NewGuid().ToString(),
-                CreatedDate = DateTimeOffset.UtcNow
+                CreatedDate = DateTimeOffset.UtcNow,
+                Role = Guid.NewGuid().ToString()
             };
         }
     }

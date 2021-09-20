@@ -9,7 +9,7 @@ namespace Eze.Api.Dtos
     public record AccountDto(Guid Id, string Name, string Username, string Password, DateTimeOffset CreatedDate, string Role);
     public record CreateAccountDto([Required] string Name, [Required] string Username, [Required] string Password, string Role);
     public record UpdateAccountDto([Required] string Name, [Required] string Username, [Required] string Password, string Role);
-    public record AccountWithTokenDto(string Name, string Username, string Password, string Token);
+    public record AccountWithTokenDto(string Name, string Username, string Password, string AccessToken, string RefreshToken);
     public record LoginAccountDto([Required] string Username, [Required] string Password);
 
     //Item related objects
@@ -22,4 +22,7 @@ namespace Eze.Api.Dtos
     public record CreateRequestDto([Required] IEnumerable<Guid> ItemIds, [Required] string StudentName, [Required] Guid ProfessorId, [Required] string Description);
     public record UpdateRequestDto([Required] bool Status);
     public record RequestPendingDto(Guid Id, IEnumerable<Item> Items, DateTimeOffset CreatedDate, string StudentName, string ProfessorName, string Code, bool Status);
+
+    //RefreshToken related objects
+    public record RefreshRequestDto(string AccessToken, string RefreshToken);
 }

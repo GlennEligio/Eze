@@ -125,27 +125,81 @@ namespace Eze.Api.Controllers
                 return NotFound();
             }
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(jwtSettings.SecretKey);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, account.Id.ToString()),  
-                    new Claim(ClaimTypes.Role, account.Role)
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key)
-                    , SecurityAlgorithms.HmacSha256Signature)
-            };
+            RefreshToken refreshToken = GenerateRefreshToken();
+            refreshToken.UserId = account.Id;
+            await repo.CreateRefreshTokenAsync(refreshToken);
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
             var accountWithToken = new AccountWithTokenDto(account.Name, 
                                                             account.Username, 
                                                             account.Password, 
-                                                            tokenHandler.WriteToken(token));
+                                                            GenerateAccessToken(account.Id, account.Role),
+                                                            refreshToken.Token);
 
             return Ok(accountWithToken);
+        }
+
+        [HttpPost("RefreshToken")]
+        public async Task<ActionResult<AccountWithTokenDto>> RefreshTokenAsync([FromBody] RefreshRequestDto refreshRequest)
+        {
+            Account account = await GetAccountFromAccessTokenAsync(refreshRequest.AccessToken);
+
+            if(account is not null && await ValidateRefreshTokenAsync(account, refreshRequest.RefreshToken))
+            {
+                var accountWithToken = new AccountWithTokenDto(account.Name,
+                                                            account.Username,
+                                                            account.Password,
+                                                            GenerateAccessToken(account.Id, account.Role),
+                                                            refreshRequest.RefreshToken);
+                return accountWithToken;
+            }
+
+            return null;
+        }
+
+        private async Task<bool> ValidateRefreshTokenAsync(Account account, string refreshToken)
+        {
+            RefreshToken refreshTokenUser = (await repo.GetRefreshTokensAsync())
+                                                .Where(existingRT => existingRT.Token == refreshToken)
+                                                .OrderByDescending(existingRT => existingRT.ExpiryDate)
+                                                .FirstOrDefault();
+
+            if(refreshTokenUser != null && refreshTokenUser.UserId == account.Id && 
+                refreshTokenUser.ExpiryDate > DateTimeOffset.UtcNow)
+                {
+                    return true;
+                }
+
+            return false;
+        }
+
+        private async Task<Account> GetAccountFromAccessTokenAsync(string accessToken)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(jwtSettings.SecretKey);
+
+            SecurityToken securityToken;
+
+            var tokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                };
+
+            var principal = tokenHandler.ValidateToken(accessToken, tokenValidationParameters, out securityToken);
+
+            var jwtSecurityToken = securityToken as JwtSecurityToken;
+
+            if(jwtSecurityToken is not null && jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+            {
+                var accountId = principal.FindFirst(ClaimTypes.Name)?.Value;
+                var account = await repo.GetAccountAsync(Guid.Parse(accountId));
+                return account;
+            }
+
+            return null;
         }
 
         private RefreshToken GenerateRefreshToken()
@@ -162,6 +216,26 @@ namespace Eze.Api.Controllers
             refreshToken.ExpiryDate = DateTimeOffset.UtcNow.AddMonths(6);
 
             return refreshToken;
+        }
+
+        private string GenerateAccessToken(Guid accountId, string role)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(jwtSettings.SecretKey);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, accountId.ToString()),  
+                    new Claim(ClaimTypes.Role, role)
+                }),
+                Expires = DateTime.UtcNow.AddMinutes(5),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key)
+                    , SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
 
     }
