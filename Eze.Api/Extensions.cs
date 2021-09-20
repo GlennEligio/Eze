@@ -1,7 +1,12 @@
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 using Eze.Api.Dtos;
 using Eze.Api.Entities;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Eze.Api
 {
@@ -30,6 +35,42 @@ namespace Eze.Api
         public static RequestDto AsRequestDto(this Request request)
         {
             return new RequestDto(request.Id, request.ItemIds, request.CreatedDate, request.StudentName, request.ProfessorId, request.Code, request.Status, request.Description);
+        }
+
+        public static RefreshToken GenerateRefreshToken()
+        {
+            RefreshToken refreshToken = new();
+            var randomNumber = new byte[32];
+
+            using(var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomNumber);
+                refreshToken.Token = Convert.ToBase64String(randomNumber);
+            }
+
+            refreshToken.ExpiryDate = DateTimeOffset.UtcNow.AddMonths(6);
+
+            return refreshToken;
+        }
+
+        public static string GenerateAccessToken(Guid accountId, string role, string secretKey)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(secretKey);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, accountId.ToString()),  
+                    new Claim(ClaimTypes.Role, role)
+                }),
+                Expires = DateTime.UtcNow.AddMinutes(5),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key)
+                    , SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
     }
 }
