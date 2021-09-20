@@ -125,23 +125,19 @@ namespace Eze.Api.Controllers
                 return NotFound();
             }
 
-            try
-            {
-                RefreshToken refreshToken = GenerateRefreshToken();
-                refreshToken.UserId = account.Id;
-                await repo.CreateRefreshTokenAsync(refreshToken);
 
-                var accountWithToken = new AccountWithTokenDto(account.Name, 
-                                                                account.Username, 
-                                                                account.Password, 
-                                                                GenerateAccessToken(account.Id, account.Role),
-                                                                refreshToken.Token);
+            RefreshToken refreshToken = GenerateRefreshToken();
+            refreshToken.UserId = account.Id;
+            await repo.CreateRefreshTokenAsync(refreshToken);
 
-                return Ok(accountWithToken);
-            }catch
-            {
-                return NotFound();
-            }
+            var accountWithToken = new AccountWithTokenDto(account.Name, 
+                                                            account.Username, 
+                                                            account.Password, 
+                                                            GenerateAccessToken(account.Id, account.Role),
+                                                            refreshToken.Token);
+
+            return Ok(accountWithToken);
+
         }
 
         [HttpPost("RefreshToken")]
