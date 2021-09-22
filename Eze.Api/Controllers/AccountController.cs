@@ -33,7 +33,7 @@ namespace Eze.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<AccountDto>>> GetAccountsAsync()
         {
             var accounts = (await repo.GetAccountsAsync())
@@ -46,6 +46,7 @@ namespace Eze.Api.Controllers
 
         [HttpGet("{id}")]
         [ActionName("GetAccountAsync")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<AccountDto>> GetAccountAsync(Guid id)
         {
             var account = await repo.GetAccountAsync(id);
@@ -78,6 +79,7 @@ namespace Eze.Api.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin,Professor,Student")]
         public async Task<ActionResult> UpdateAccountAsync(Guid id, UpdateAccountDto accountDto)
         {
             var account = await repo.GetAccountAsync(id);
@@ -98,6 +100,7 @@ namespace Eze.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteAccountAsync(Guid id)
         {
             var account = await repo.GetAccountAsync(id);
@@ -140,7 +143,8 @@ namespace Eze.Api.Controllers
 
         }
 
-        [HttpPost("RefreshToken")]
+        [HttpGet("RefreshToken")]
+        [Authorize(Roles = "Admin,Professor,Student")]
         public async Task<ActionResult<AccountWithTokenDto>> RefreshTokenAsync([FromBody] RefreshRequestDto refreshRequest)
         {
             Account account = await GetAccountFromAccessTokenAsync(refreshRequest.AccessToken);
@@ -187,7 +191,8 @@ namespace Eze.Api.Controllers
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
                     ValidateAudience = false,
-                    ClockSkew = TimeSpan.Zero
+                    ClockSkew = TimeSpan.Zero,
+                    ValidateLifetime = false
                 };
 
             var principal = tokenHandler.ValidateToken(accessToken, tokenValidationParameters, out securityToken);

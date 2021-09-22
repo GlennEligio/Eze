@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Eze.Api.Dtos;
 using Eze.Api.Entities;
 using Eze.Api.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -12,6 +13,7 @@ namespace Eze.Api.Controllers
 {
     [ApiController]
     [Route("api/item")]
+    [Authorize(Roles = "Admin")]
     public class ItemController : ControllerBase
     {
         private readonly IEzeRepository repo;
@@ -24,6 +26,7 @@ namespace Eze.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles ="Admin,Professor,Student")]
         public async Task<ActionResult<IEnumerable<ItemDto>>> GetItemsAsync()
         {
             var items = (await repo.GetItemsAsync()).Select(item => item.AsItemDto());
@@ -53,6 +56,7 @@ namespace Eze.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles ="Admin")]
         public async Task<ActionResult<ItemDto>> CreateItemAsync(CreateItemDto itemDto)
         {
             var item = new Item()

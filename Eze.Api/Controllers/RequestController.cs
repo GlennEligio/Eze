@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Eze.Api.Dtos;
 using Eze.Api.Entities;
 using Eze.Api.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -25,6 +26,7 @@ namespace Eze.Api.Controllers
 
         //GET: Request/
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ICollection<RequestDto>>> GetRequestsAsync()
         {
             var requests = (await repo.GetRequestsAsync()).Select(request => request.AsRequestDto());
@@ -37,6 +39,7 @@ namespace Eze.Api.Controllers
         //GET: Request/{id}
         [HttpGet("{id}")]
         [ActionName("GetRequestAsync")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<RequestDto>> GetRequestAsync(Guid id)
         {
             var request = await repo.GetRequestAsync(id);
@@ -51,6 +54,7 @@ namespace Eze.Api.Controllers
 
         //POST: Request/
         [HttpPost]
+        [Authorize(Roles = "Admin,Student")]
         public async Task<ActionResult<RequestDto>> CreateRequestAsync(CreateRequestDto requestDto)
         {
             var request = new Request
@@ -72,6 +76,7 @@ namespace Eze.Api.Controllers
 
         //PUT: Request/{id}
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin,Professor,Student")]
         public async Task<ActionResult> UpdateRequestAsync(Guid id, UpdateRequestDto requestDto)
         {
             var request = await repo.GetRequestAsync(id);
@@ -89,6 +94,7 @@ namespace Eze.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteRequestAsync(Guid id)
         {
             var request = await repo.GetRequestAsync(id);

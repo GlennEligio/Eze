@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Eze.Api.Dtos;
 using Eze.Api.Entities;
 using Eze.Api.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -25,9 +26,10 @@ namespace Eze.Api.Controllers
         
         //GET: /request-pending/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<RequestPendingDto>>> RequestPendingAsync(Guid id)
+        [Authorize(Roles = "Admin,Professor")]
+        public async Task<ActionResult<IEnumerable<RequestPendingDto>>> RequestPendingAsync(Guid profId)
         {
-            var account = await repo.GetAccountAsync(id);
+            var account = await repo.GetAccountAsync(profId);
 
             if(account == null)
             {
@@ -35,7 +37,7 @@ namespace Eze.Api.Controllers
             }
 
             var requests = (await repo.GetRequestsAsync())
-                                .Where(request => request.ProfessorId == id && request.Status == false);
+                                .Where(request => request.ProfessorId == profId && request.Status == false);
 
             var requestDtos = new List<RequestPendingDto>();  
 
