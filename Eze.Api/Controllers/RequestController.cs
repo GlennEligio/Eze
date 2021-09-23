@@ -57,6 +57,20 @@ namespace Eze.Api.Controllers
         [Authorize(Roles = "Admin,Student")]
         public async Task<ActionResult<RequestDto>> CreateRequestAsync(CreateRequestDto requestDto)
         {
+            var items = (await repo.GetItemsAsync()).Where(item => requestDto.ItemIds.Contains(item.Id));
+            
+            if(items == null)
+            {
+                return NotFound("No items exist given the item ids");
+            }
+            
+            var prof = repo.GetAccountAsync(requestDto.ProfessorId);
+
+            if(prof == null)
+            {
+                return NotFound("No professor exist in database");
+            }
+
             var request = new Request
             {
                 Id = Guid.NewGuid(),
