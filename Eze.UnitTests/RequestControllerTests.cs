@@ -99,12 +99,14 @@ namespace Eze.UnitTests
         [Fact]
         public async Task UpdateRequestAsync_WithExistingRequest_ReturnsNoContent()
         {
+            var statuses = new[]{"Pending, Rejected, Accepted"};
+
             //Arrange
             var existingRequest = CreateRandomRequest();
             repositoryStub.Setup(repo => repo.GetRequestAsync(It.IsAny<Guid>())).ReturnsAsync(existingRequest);
             
             var requestId = existingRequest.Id;
-            var requestToUpdate = new UpdateRequestDto(rand.Next(3)%2 == 1 ? false : true);
+            var requestToUpdate = new UpdateRequestDto(statuses[rand.Next(3)]);
 
             var controller = new RequestController(repositoryStub.Object, loggerStub.Object);
 
@@ -143,7 +145,7 @@ namespace Eze.UnitTests
                 StudentName = Guid.NewGuid().ToString(),
                 ProfessorId = Guid.NewGuid(),
                 Code = Guid.NewGuid().ToString(),
-                Status = rand.Next(3)%2 == 1 ? false : true,
+                Status = "Pending",
                 Description = Guid.NewGuid().ToString()
             };
         }

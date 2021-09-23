@@ -9,9 +9,9 @@ namespace Eze.Api.Repositories
     {
         private readonly List<Request> requests = new List<Request>()
         {
-            new Request {Id=Guid.NewGuid(), ItemIds= new List<Guid>(){Guid.NewGuid(), Guid.NewGuid()}, CreatedDate=DateTimeOffset.UtcNow, StudentName="Glenn", ProfessorId=Guid.NewGuid(), Status=false, Code="sdawadsd", Description="For Testing"},
-            new Request {Id=Guid.NewGuid(), ItemIds= new List<Guid>(){Guid.NewGuid()}, CreatedDate=DateTimeOffset.UtcNow, StudentName="John", ProfessorId=Guid.NewGuid(), Status=false, Code="sdawwew", Description="For experiment"},
-            new Request {Id=Guid.NewGuid(), ItemIds= new List<Guid>(){Guid.NewGuid(),Guid.NewGuid(),Guid.NewGuid()}, CreatedDate=DateTimeOffset.UtcNow, StudentName="Eligio", ProfessorId=Guid.NewGuid(), Status=false, Code="sdawwewe", Description="Test"}
+            new Request {Id=Guid.NewGuid(), ItemIds= new List<Guid>(){Guid.NewGuid(), Guid.NewGuid()}, CreatedDate=DateTimeOffset.UtcNow, StudentName="Glenn", ProfessorId=Guid.NewGuid(), Status="Pending", Code="sdawadsd", Description="For Testing"},
+            new Request {Id=Guid.NewGuid(), ItemIds= new List<Guid>(){Guid.NewGuid()}, CreatedDate=DateTimeOffset.UtcNow, StudentName="John", ProfessorId=Guid.NewGuid(), Status="Pending", Code="sdawwew", Description="For experiment"},
+            new Request {Id=Guid.NewGuid(), ItemIds= new List<Guid>(){Guid.NewGuid(),Guid.NewGuid(),Guid.NewGuid()}, CreatedDate=DateTimeOffset.UtcNow, StudentName="Eligio", ProfessorId=Guid.NewGuid(), Status="Pending", Code="sdawwewe", Description="Test"}
         };
 
         public void CreateRequest(Request request)

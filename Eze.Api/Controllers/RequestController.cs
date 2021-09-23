@@ -64,7 +64,7 @@ namespace Eze.Api.Controllers
                 StudentName = requestDto.StudentName,
                 ProfessorId = requestDto.ProfessorId,
                 Code = Extensions.GenerateRandomAlphanumericString(),
-                Status = false,
+                Status = "Pending",
                 CreatedDate = DateTimeOffset.UtcNow,
                 Description = requestDto.Description
             };

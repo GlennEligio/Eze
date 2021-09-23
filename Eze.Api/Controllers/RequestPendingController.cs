@@ -37,7 +37,7 @@ namespace Eze.Api.Controllers
             }
 
             var requests = (await repo.GetRequestsAsync())
-                                .Where(request => request.ProfessorId == profId && request.Status == false);
+                                .Where(request => request.ProfessorId == profId && request.Status == "Pending");
 
             var requestDtos = new List<RequestPendingDto>();  
 

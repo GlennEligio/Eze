@@ -25,10 +25,10 @@ namespace Eze.Api.Dtos
     public record UpdateItemDto([Required] string Name, [Required] string Description, [Required] string Condition);
 
     //Request related objects
-    public record RequestDto(Guid Id, IEnumerable<Guid> ItemIds, DateTimeOffset CreatedDate, string StudentName, Guid ProfessorId, string Code, bool Status, string Description);
+    public record RequestDto(Guid Id, IEnumerable<Guid> ItemIds, DateTimeOffset CreatedDate, string StudentName, Guid ProfessorId, string Code, string Status, string Description);
     public record CreateRequestDto([Required] IEnumerable<Guid> ItemIds, [Required] string StudentName, [Required] Guid ProfessorId, [Required] string Description);
-    public record UpdateRequestDto([Required] bool Status);
-    public record RequestPendingDto(Guid Id, IEnumerable<Item> Items, DateTimeOffset CreatedDate, string StudentName, string ProfessorName, string Code, bool Status);
+    public record UpdateRequestDto([Required] string Status);
+    public record RequestPendingDto(Guid Id, IEnumerable<Item> Items, DateTimeOffset CreatedDate, string StudentName, string ProfessorName, string Code, string Status);
 
     //RefreshToken related objects
     public record RefreshRequestDto(string AccessToken, string RefreshToken);

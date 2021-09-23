@@ -45,7 +45,7 @@ namespace Eze.UnitTests
             pendingRequest.Should().NotBeNull();
             if(pendingRequest.Count < 0)
             {
-                pendingRequest.Should().OnlyContain(request => request.Status == false);
+                pendingRequest.Should().OnlyContain(request => request.Status == "Pending");
             }
             pendingRequest.Should().OnlyHaveUniqueItems(request => request.Id);
         }
@@ -76,6 +76,7 @@ namespace Eze.UnitTests
 
         private Request CreateRandomRequest()
         {
+            var statuses = new[]{"Pending", "Rejected", "Accepted"};
             return new Request
             {
                 Id = Guid.NewGuid(),
@@ -84,7 +85,7 @@ namespace Eze.UnitTests
                 StudentName = Guid.NewGuid().ToString(),
                 ProfessorId = Guid.NewGuid(),
                 Code = Guid.NewGuid().ToString(),
-                Status = rand.Next(3)%2 == 1 ? false : true,
+                Status = statuses[rand.Next(2)],
                 Description = Guid.NewGuid().ToString()
             };
         }
@@ -99,7 +100,7 @@ namespace Eze.UnitTests
                 StudentName = Guid.NewGuid().ToString(),
                 ProfessorId = Guid.NewGuid(),
                 Code = Guid.NewGuid().ToString(),
-                Status = false,
+                Status = "Pending",
                 Description = Guid.NewGuid().ToString()
             };
         }

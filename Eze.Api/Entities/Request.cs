@@ -15,7 +15,7 @@ namespace Eze.Api.Entities
         public string StudentName { get; set; }
         public Guid ProfessorId { get; set; }
         public string Code { get; set; }
-        public bool Status { get; set; }
+        public string Status { get; set; }
         public string Description { get; set; }
     }
 }

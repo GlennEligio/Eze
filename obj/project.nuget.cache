@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ug1CNSrXixHBZ8xJFtob5SHgRPKMZLyHbTnoqw/SPVETaxejCrF9kOM1KWfgFK64mw36xsyUfeH782e2uwShKA==",
+  "dgSpecHash": "P0+OvKCYzIitLcSQb58VeKH7RbtVEkYKHL7kUUST5+R5db/8gLWD7xORvg2hMjGv0N4u453O5RDb+aSLQ+LLRg==",
   "success": true,
-  "projectFilePath": "D:\\Study\\programming\\.NETCore\\Projects\\EZERestApiWithAuth\\Eze\\Eze\\build.proj",
+  "projectFilePath": "D:\\Study\\programming\\.NETCore\\Projects\\Eze\\build.proj",
   "expectedPackageFiles": [],
   "logs": []
 }

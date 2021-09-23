@@ -7705,11 +7705,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\Study\\programming\\.NETCore\\Projects\\EZERestApiWithAuth\\Eze\\Eze\\Eze.UnitTests\\Eze.UnitTests.csproj",
+      "projectUniqueName": "D:\\Study\\programming\\.NETCore\\Projects\\Eze\\Eze.UnitTests\\Eze.UnitTests.csproj",
       "projectName": "Eze.UnitTests",
-      "projectPath": "d:\\Study\\programming\\.NETCore\\Projects\\EZERestApiWithAuth\\Eze\\Eze\\Eze.UnitTests\\Eze.UnitTests.csproj",
+      "projectPath": "D:\\Study\\programming\\.NETCore\\Projects\\Eze\\Eze.UnitTests\\Eze.UnitTests.csproj",
       "packagesPath": "C:\\Users\\glenn\\.nuget\\packages\\",
-      "outputPath": "d:\\Study\\programming\\.NETCore\\Projects\\EZERestApiWithAuth\\Eze\\Eze\\Eze.UnitTests\\obj\\",
+      "outputPath": "D:\\Study\\programming\\.NETCore\\Projects\\Eze\\Eze.UnitTests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
@@ -7730,8 +7730,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "d:\\Study\\programming\\.NETCore\\Projects\\EZERestApiWithAuth\\Eze\\Eze\\Eze.Api\\Eze.Api.csproj": {
-              "projectPath": "d:\\Study\\programming\\.NETCore\\Projects\\EZERestApiWithAuth\\Eze\\Eze\\Eze.Api\\Eze.Api.csproj"
+            "D:\\Study\\programming\\.NETCore\\Projects\\Eze\\Eze.Api\\Eze.Api.csproj": {
+              "projectPath": "D:\\Study\\programming\\.NETCore\\Projects\\Eze\\Eze.Api\\Eze.Api.csproj"
             }
           }
         }
