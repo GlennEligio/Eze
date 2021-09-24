@@ -82,6 +82,19 @@ namespace Eze.UnitTests
                 Guid.NewGuid().ToString()
             );
 
+            var expectedItems = new []
+            {
+                CreateRandomItem((requestToCreate.ItemIds as List<Guid>)[0]),
+                CreateRandomItem(Guid.NewGuid()),
+                CreateRandomItem((requestToCreate.ItemIds as List<Guid>)[2])
+
+            };
+
+            var professor = CreateRandomAccount(requestToCreate.ProfessorId);
+
+            repositoryStub.Setup(repo => repo.GetItemsAsync()).ReturnsAsync(expectedItems);
+            repositoryStub.Setup(repo => repo.GetAccountAsync(It.IsAny<Guid>())).ReturnsAsync(professor);
+            
             var controller = new RequestController(repositoryStub.Object, loggerStub.Object);
 
             //Act
@@ -99,7 +112,7 @@ namespace Eze.UnitTests
         [Fact]
         public async Task UpdateRequestAsync_WithExistingRequest_ReturnsNoContent()
         {
-            var statuses = new[]{"Pending, Rejected, Accepted"};
+            var statuses = new[]{"Pending", "Rejected", "Accepted"};
 
             //Arrange
             var existingRequest = CreateRandomRequest();
@@ -147,6 +160,31 @@ namespace Eze.UnitTests
                 Code = Guid.NewGuid().ToString(),
                 Status = "Pending",
                 Description = Guid.NewGuid().ToString()
+            };
+        }
+
+        private Item CreateRandomItem(Guid id)
+        {
+            return new ()
+            {
+                Id = id,
+                Name = Guid.NewGuid().ToString(),
+                Description = Guid.NewGuid().ToString(),
+                Condition = Guid.NewGuid().ToString(),
+                CreatedDate = DateTimeOffset.UtcNow
+            };
+        }
+
+        private Account CreateRandomAccount(Guid id)
+        {
+            return new Account
+            {
+                Id = id,
+                Name = Guid.NewGuid().ToString(),
+                Username = Guid.NewGuid().ToString(),
+                Password = Guid.NewGuid().ToString(),
+                CreatedDate = DateTimeOffset.UtcNow,
+                Role = Guid.NewGuid().ToString()
             };
         }
     }

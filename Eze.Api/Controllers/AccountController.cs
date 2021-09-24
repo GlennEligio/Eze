@@ -115,7 +115,7 @@ namespace Eze.Api.Controllers
             return NoContent();
         }
 
-        [HttpGet("Login")]
+        [HttpPost("Login")]
         public async Task<ActionResult<AccountWithTokenDto>> LoginAsync([FromBody]LoginAccountDto accountDto)
         {
             var account = (await repo.GetAccountsAsync())
@@ -144,7 +144,6 @@ namespace Eze.Api.Controllers
         }
 
         [HttpGet("RefreshToken")]
-        [Authorize(Roles = "Admin,Professor,Student")]
         public async Task<ActionResult<AccountWithTokenDto>> RefreshTokenAsync([FromBody] RefreshRequestDto refreshRequest)
         {
             Account account = await GetAccountFromAccessTokenAsync(refreshRequest.AccessToken);
