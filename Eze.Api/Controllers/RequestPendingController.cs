@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 namespace Eze.Api.Controllers
 {
     [ApiController]
-    [Route("request-pending")]
+    [Route("api/request-pending")]
     public class RequestPendingController : ControllerBase
     {        
         private readonly IEzeRepository repo;
@@ -25,7 +25,7 @@ namespace Eze.Api.Controllers
         }
         
         //GET: /request-pending/{id}
-        [HttpGet("{id}")]
+        [HttpGet("{profId}")]
         [Authorize(Roles = "Admin,Professor")]
         public async Task<ActionResult<IEnumerable<RequestPendingDto>>> RequestPendingAsync(Guid profId)
         {
