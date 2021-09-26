@@ -116,7 +116,7 @@ namespace Eze.Api.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<ActionResult<AccountWithTokenDto>> LoginAsync([FromBody]LoginAccountDto accountDto)
+        public async Task<ActionResult<AccountWithTokenDto>> LoginAsync(LoginAccountDto accountDto)
         {
             var account = (await repo.GetAccountsAsync())
                             .Where(existingAccount => existingAccount.Username == accountDto.Username
@@ -143,8 +143,8 @@ namespace Eze.Api.Controllers
 
         }
 
-        [HttpGet("RefreshToken")]
-        public async Task<ActionResult<AccountWithTokenDto>> RefreshTokenAsync([FromBody] RefreshRequestDto refreshRequest)
+        [HttpPost("RefreshToken")]
+        public async Task<ActionResult<AccountWithTokenDto>> RefreshTokenAsync(RefreshRequestDto refreshRequest)
         {
             Account account = await GetAccountFromAccessTokenAsync(refreshRequest.AccessToken);
 
