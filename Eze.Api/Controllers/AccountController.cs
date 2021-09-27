@@ -161,7 +161,7 @@ namespace Eze.Api.Controllers
             return null;
         }
 
-        [HttpGet("{role}")]
+        [HttpGet("role/{role}")]
         public async Task<ActionResult<IEnumerable<AccountDisplayDto>>> GetAccountByRole(string role)
         {
             var accountsByRole = (await repo.GetAccountsAsync()).Where(account => account.Role == role)
