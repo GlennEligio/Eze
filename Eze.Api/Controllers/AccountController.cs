@@ -161,6 +161,20 @@ namespace Eze.Api.Controllers
             return null;
         }
 
+        [HttpGet("{role}")]
+        public async Task<ActionResult<IEnumerable<AccountDisplayDto>>> GetAccountByRole(string role)
+        {
+            var accountsByRole = (await repo.GetAccountsAsync()).Where(account => account.Role == role)
+                                        .Select(account => account.AsAccountDisplayDto());
+
+            if(accountsByRole is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(accountsByRole);
+        }
+
         private async Task<bool> ValidateRefreshTokenAsync(Account account, string refreshToken)
         {
             RefreshToken refreshTokenUser = (await repo.GetRefreshTokensAsync())

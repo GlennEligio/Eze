@@ -37,6 +37,11 @@ namespace Eze.Api
             return new RequestDto(request.Id, request.ItemIds, request.CreatedDate, request.StudentName, request.ProfessorId, request.Code, request.Status, request.Description);
         }
 
+        public static AccountDisplayDto AsAccountDisplayDto(this Account account)
+        {
+            return new AccountDisplayDto(account.Id, account.Name, account.Role);
+        }
+
         public static RefreshToken GenerateRefreshToken()
         {
             RefreshToken refreshToken = new();

@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: eze
-        image: shuntjg/eze:v14
+        image: shuntjg/eze:v15
         resources:
           limits:
             memory: "128Mi"
