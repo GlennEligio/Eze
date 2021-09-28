@@ -136,6 +136,7 @@ namespace Eze.Api.Controllers
             var accountWithToken = new AccountWithTokenDto(account.Name, 
                                                             account.Username, 
                                                             account.Password, 
+                                                            account.Role,
                                                             GenerateAccessToken(account.Id, account.Role),
                                                             refreshToken.Token);
 
@@ -153,6 +154,7 @@ namespace Eze.Api.Controllers
                 var accountWithToken = new AccountWithTokenDto(account.Name,
                                                             account.Username,
                                                             account.Password,
+                                                            account.Role,
                                                             GenerateAccessToken(account.Id, account.Role),
                                                             refreshRequest.RefreshToken);
                 return accountWithToken;
