@@ -133,7 +133,8 @@ namespace Eze.Api.Controllers
             refreshToken.UserId = account.Id;
             await repo.CreateRefreshTokenAsync(refreshToken);
 
-            var accountWithToken = new AccountWithTokenDto(account.Name, 
+            var accountWithToken = new AccountWithTokenDto(account.Id,
+                                                            account.Name, 
                                                             account.Username, 
                                                             account.Password, 
                                                             account.Role,
@@ -151,7 +152,8 @@ namespace Eze.Api.Controllers
 
             if(account is not null && await ValidateRefreshTokenAsync(account, refreshRequest.RefreshToken))
             {
-                var accountWithToken = new AccountWithTokenDto(account.Name,
+                var accountWithToken = new AccountWithTokenDto(account.Id,
+                                                            account.Name,
                                                             account.Username,
                                                             account.Password,
                                                             account.Role,

@@ -16,7 +16,7 @@ namespace Eze.Api.Dtos
                                     [Required] string Password, 
                                     string Role);
     public record UpdateAccountDto([Required] string Name, [Required] string Username, [Required] string Password, string Role);
-    public record AccountWithTokenDto(string Name, string Username, string Password, string Role, string AccessToken, string RefreshToken);
+    public record AccountWithTokenDto(Guid id, string Name, string Username, string Password, string Role, string AccessToken, string RefreshToken);
     public record LoginAccountDto([Required] string Username, [Required] string Password);
     public record AccountDisplayDto(Guid Id, string Name, string Role);
 
