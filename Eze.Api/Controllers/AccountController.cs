@@ -253,7 +253,7 @@ namespace Eze.Api.Controllers
                     new Claim(ClaimTypes.Name, accountId.ToString()),  
                     new Claim(ClaimTypes.Role, role)
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(5),
+                Expires = DateTime.UtcNow.AddHours(10),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key)
                     , SecurityAlgorithms.HmacSha256Signature)
             };
